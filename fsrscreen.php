@@ -140,7 +140,7 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 		// Find the main direction of the given destination
 		$mainDirection = findMainDirectionForDestination($departure[1], $departure[0]);
 		if ($mainDirection == null) {
-			//break;
+			continue;
 		}
 		
 		// If display is set to false
