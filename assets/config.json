@@ -1,0 +1,89 @@
+{
+  "lines": {
+	"3": {
+	  "directions": [
+		{
+		  "default": "WIM",
+		  "other": [
+			"TRB"
+		  ]
+		},
+		{
+		  "default": "COZ",
+		  "other": [
+			"NTN"
+		  ]
+		}
+	  ]
+	},
+	"8": {
+	  "directions": [
+		{
+		  "default": "SVS",
+		  "display": false
+		},
+		{
+		  "default": "HEL",
+		  "other": [
+			"GOR",
+			"TRB",
+			"IFS"
+		  ]
+		}
+	  ]
+	},
+	"61": {
+	  "directions": [
+		{
+		  "default": "THA"
+		},
+		{
+		  "default": "BUE",
+		  "other": [
+			"WEI",
+			"FST",
+			"GRN"
+		  ]
+		}
+	  ]
+	},
+	"333": {
+	  "directions": [
+		{
+		  "default": "PIP",
+		  "other": [
+			"HBF",
+			"Ammonstraße"
+		  ]
+		},
+		{
+		  "default": "Hetzdorf",
+		  "other": [
+			"Mohorn",
+			"Wilsdruff",
+			"Grumbach"
+		  ]
+		}
+	  ]
+	}
+  },
+  "destinations": {
+	"Btf. Trachenberge": "TRB",
+	"Btf. Gorbitz": "GOR",
+	"Btf. Waltherstraße": "BWA",
+	"Btf. Gruna": "GRN",
+	"Coschütz": "COZ",
+	"Wilder Mann": "WIM",
+	"Plauen": "NTN",
+	"Südvorstadt": "SVS",
+	"Hellerau": "HEL",
+	"Infineon Süd": "IFS",
+	"Löbtau": "THA",
+	"Gruna": "GRN",
+	"Weißig": "WEI",
+	"Bühlau": "BUE",
+	"Fernsehturm": "FST",
+	"Hauptbahnhof": "HBF"
+  },
+  "linesToNotDisplay": [400]
+}
