@@ -11,6 +11,7 @@ License: A "Slug" license name e.g. GPL2
 */
 
 declare(strict_types=1);
+echo generateScreenLayout(generateStructuredArrayWithNextDepartures(retrieveDepartureDataFromVVO()));
 
 /**
  * Reads the config file at assets/config.json and returns an array
@@ -88,11 +89,10 @@ function translateFullDestinationsToCodes (string $destination) : string
  * Finds the main direction for a given destination-line-pair.
  * @param string $destination Destination of the trip, as station code
  * @param string $lineNr Line number
- * @return string|null|false Returns id of the main direction, if not found null, or if set to display=false: false..
+ * @return string|null|false Returns id of the main direction, if not found null, or if set to display=false: false.
  */
-function findMainDirectionForDestination (string $destination, string $lineNr) : int|null|false {
+function findMainDirectionForDestination (string $destination, string $lineNr) : string|null|false {
 	$lineDirections = readConfig()['lines'][$lineNr]['directions'];
-	var_dump($lineDirections);
 	foreach ($lineDirections as $directionId => $lineDirection) {
 		
 		// Check if display is set to false
@@ -101,13 +101,13 @@ function findMainDirectionForDestination (string $destination, string $lineNr) :
 		}
 		
 		// Check, if destination == main direction
-		if ($destination == $lineDirection['default']) return $directionId;
+		if ($destination == $lineDirection['default']) return $lineDirection['default'];
 		
 		// Skip if 'other' is not defined
 		if (!key_exists('other', $lineDirection)) continue;
 		
-		// Search 'other' sub array for destnation
-		if (in_array($destination, $lineDirection['other'])) return $directionId;
+		// Search 'other' sub array for destination
+		if (in_array($destination, $lineDirection['other'])) return $lineDirection['default'];
 	}
 	return null;
 }
@@ -139,12 +139,12 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 		
 		// Find the main direction of the given destination
 		$mainDirection = findMainDirectionForDestination($departure[1], $departure[0]);
-		if ($mainDirection == null) {
+		if ($mainDirection === null) {
 			continue;
 		}
 		
 		// If display is set to false
-		if (!$mainDirection) continue;
+		if ($mainDirection === false) continue;
 		
 		// Create main direction entry in workingArray -> line, if not exists already
 		if (!key_exists($mainDirection, $workingArray[$departure[0]])) {
@@ -153,11 +153,52 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 		
 		// If departing immediately set minutesRemaining to 0
 		if ($departure[2] == "") {
-			$departure[2] = 0;
+			$departure[2] = "0";
 		}
 		
 		// Add processed data to workingArray
-		$workingArray[$departure[0]][$mainDirection] += array($departure[2], $departure[1]);
+		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $departure[1]);
 	}
+	var_dump($workingArray);
 	return $workingArray;
+}
+
+function generateSpanForSingeDeparture (array $departureArray) : string
+{
+	return "<span class='fsrscreen_singleDepartureContainer'><span class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</span><span class='fsrscreen_singleDepartureDestination'>$departureArray[1]</span></span>";
+}
+
+
+function generateSpanForSingeDirection (array $departureArray) : string
+{
+	$outputString = "<span class='fsrscreen_mainDirectionContainer'>";
+	var_dump($departureArray);
+	foreach ($departureArray as $departure) {
+		$outputString .= generateSpanForSingeDeparture($departure);
+	}
+	
+	return $outputString."</span>";
+}
+
+
+function generateSpanForSingleLine (array $departureArray, string $lineNr) : string
+{
+	$outputString = "<span class='fsrscreen_lineContainer'><span class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</span>";
+	foreach ($departureArray as $direction) {
+		$outputString .= generateSpanForSingeDirection($direction);
+	}
+	
+	return $outputString."</span>";
+}
+
+
+function generateScreenLayout (array $departureArray) : string
+{
+	$outputString = "";
+	echo json_encode($departureArray);
+	foreach ($departureArray as $line => $directions) {
+		$outputString .= generateSpanForSingleLine($directions, strval($line));
+	}
+	
+	return "<div class='fsrscreen_nextDepartreBar'>$outputString</div>";
 }
