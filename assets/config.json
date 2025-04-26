@@ -1,4 +1,15 @@
 {
+  "dataProvider": {
+	"providerId": "VVO-Abfahrtsmonitor",
+	"uri": "http://widgets.vvo-online.de/abfahrtsmonitor/Abfahrten.do",
+	"method": "GET",
+	"flags": {
+	  "hst": "NUP",
+	  "vz": "0",
+	  "ort": "Dresden",
+	  "lim": 20
+	}
+  },
   "lines": {
 	"3": {
 	  "directions": [
