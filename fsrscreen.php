@@ -11,7 +11,6 @@ License: A "Slug" license name e.g. GPL2
 */
 
 declare(strict_types=1);
-echo generateScreenLayout(generateStructuredArrayWithNextDepartures(retrieveDepartureDataFromVVO()));
 
 /**
  * Reads the config file at assets/config.json and returns an array
@@ -159,7 +158,6 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 		// Add processed data to workingArray
 		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $departure[1]);
 	}
-	var_dump($workingArray);
 	return $workingArray;
 }
 
@@ -172,7 +170,6 @@ function generateSpanForSingeDeparture (array $departureArray) : string
 function generateSpanForSingeDirection (array $departureArray) : string
 {
 	$outputString = "<span class='fsrscreen_mainDirectionContainer'>";
-	var_dump($departureArray);
 	foreach ($departureArray as $departure) {
 		$outputString .= generateSpanForSingeDeparture($departure);
 	}
@@ -195,7 +192,6 @@ function generateSpanForSingleLine (array $departureArray, string $lineNr) : str
 function generateScreenLayout (array $departureArray) : string
 {
 	$outputString = "";
-	echo json_encode($departureArray);
 	foreach ($departureArray as $line => $directions) {
 		$outputString .= generateSpanForSingleLine($directions, strval($line));
 	}
