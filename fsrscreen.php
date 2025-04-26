@@ -11,13 +11,20 @@ License: A "Slug" license name e.g. GPL2
 */
 
 declare(strict_types=1);
-var_dump(retrieveDepartureDataFromVVO());
+
+add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
+function fsrscreen_showNextDepartures () : void
+{
+	$data = fsrscreen_retrieveDepartureDataFromVVO();
+	$sanitizedData = fsrscreen_generateStructuredArrayWithNextDepartures($data);
+	echo fsrscreen_generateScreenLayout($sanitizedData);
+}
 
 /**
  * Reads the config file at assets/config.json and returns an array
  * @return array
  */
-function readConfig () : array
+function fsrscreen_readConfig () : array
 {
 	$configPath = 'assets/config.json';
 	try {
@@ -47,9 +54,9 @@ function readConfig () : array
  * Each departure array contains three values: [0}: line number; [1]: destination; [2]: minutes until departure
  * @return array
  */
-function retrieveDepartureDataFromVVO () : array
+function fsrscreen_retrieveDepartureDataFromVVO () : array
 {
-	$dataProviderConfig = readConfig()['dataProvider'];
+	$dataProviderConfig = fsrscreen_readConfig()['dataProvider'];
 	
 	switch($dataProviderConfig['providerId'])
 	{
@@ -88,9 +95,9 @@ function retrieveDepartureDataFromVVO () : array
  * @param string $destination The name of the destination to be translated to its code.
  * @return string
  */
-function translateFullDestinationsToCodes (string $destination) : string
+function fsrscreen_translateFullDestinationsToCodes (string $destination) : string
 {
-	$dests = readConfig()['destinations'];
+	$dests = fsrscreen_readConfig()['destinations'];
 	if (key_exists($destination, $dests)) {
 		return $dests[$destination];
 	}
@@ -103,8 +110,8 @@ function translateFullDestinationsToCodes (string $destination) : string
  * @param string $lineNr Line number
  * @return string|null|false Returns id of the main direction, if not found null, or if set to display=false: false.
  */
-function findMainDirectionForDestination (string $destination, string $lineNr) : string|null|false {
-	$lineDirections = readConfig()['lines'][$lineNr]['directions'];
+function fsrscreen_findMainDirectionForDestination (string $destination, string $lineNr) : string|null|false {
+	$lineDirections = fsrscreen_readConfig()['lines'][$lineNr]['directions'];
 	foreach ($lineDirections as $directionId => $lineDirection) {
 		
 		// Check if display is set to false
@@ -130,19 +137,19 @@ function findMainDirectionForDestination (string $destination, string $lineNr) :
  * @param array $sourceArray An array as given by the VVO Api
  * @return array
  */
-function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
+function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 {
 	$workingArray = array();
 	foreach ($sourceArray as $departure) {
 		
 		// Translate all destinations to their code.
-		$departure[1] = translateFullDestinationsToCodes($departure[1]);
+		$departure[1] = fsrscreen_translateFullDestinationsToCodes($departure[1]);
 		
 		// Remove leading E's
 		$departure[0] = trim($departure[0], 'E');
 		
 		// Ignore lines told to ignore by the config.json
-		if (in_array($departure[0], readConfig()['linesToNotDisplay'])) continue;
+		if (in_array($departure[0], fsrscreen_readConfig()['linesToNotDisplay'])) continue;
 		
 		// Create line specific entry in workingArray, if not exists already
 		if (!key_exists($departure[0], $workingArray)) {
@@ -150,7 +157,7 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 		}
 		
 		// Find the main direction of the given destination
-		$mainDirection = findMainDirectionForDestination($departure[1], $departure[0]);
+		$mainDirection = fsrscreen_findMainDirectionForDestination($departure[1], $departure[0]);
 		if ($mainDirection === null) {
 			continue;
 		}
@@ -174,39 +181,44 @@ function generateStructuredArrayWithNextDepartures (array $sourceArray) : array
 	return $workingArray;
 }
 
-function generateSpanForSingeDeparture (array $departureArray) : string
+function fsrscreen_generateSpanForSingeDeparture (array $departureArray) : string
 {
 	return "<span class='fsrscreen_singleDepartureContainer'><span class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</span><span class='fsrscreen_singleDepartureDestination'>$departureArray[1]</span></span>";
 }
 
 
-function generateSpanForSingeDirection (array $departureArray) : string
+function fsrscreen_generateSpanForSingeDirection (array $departureArray) : string
 {
 	$outputString = "<span class='fsrscreen_mainDirectionContainer'>";
 	foreach ($departureArray as $departure) {
-		$outputString .= generateSpanForSingeDeparture($departure);
+		$outputString .= fsrscreen_generateSpanForSingeDeparture($departure);
 	}
 	
 	return $outputString."</span>";
 }
 
 
-function generateSpanForSingleLine (array $departureArray, string $lineNr) : string
+function fsrscreen_generateSpanForSingleLine (array $departureArray, string $lineNr) : string
 {
 	$outputString = "<span class='fsrscreen_lineContainer'><span class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</span>";
 	foreach ($departureArray as $direction) {
-		$outputString .= generateSpanForSingeDirection($direction);
+		$outputString .= fsrscreen_generateSpanForSingeDirection($direction);
 	}
 	
 	return $outputString."</span>";
 }
 
 
-function generateScreenLayout (array $departureArray) : string
+/**
+ * Generates the full HTML <div> for displaying the data on the site.
+ * @param array $departureArray Array as given by generateStructuredArrayWithNextDepartures() function
+ * @return string HTML string
+ */
+function fsrscreen_generateScreenLayout (array $departureArray) : string
 {
 	$outputString = "";
 	foreach ($departureArray as $line => $directions) {
-		$outputString .= generateSpanForSingleLine($directions, strval($line));
+		$outputString .= fsrscreen_generateSpanForSingleLine($directions, strval($line));
 	}
 	
 	return "<div class='fsrscreen_nextDepartreBar'>$outputString</div>";
