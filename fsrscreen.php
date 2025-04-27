@@ -13,6 +13,11 @@ License: A "Slug" license name e.g. GPL2
 declare(strict_types=1);
 
 add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
+
+/**
+ * Function that is called by the fsrscreen_showNextDepartures short code
+ * @return void
+ */
 function fsrscreen_showNextDepartures () : void
 {
 	$data = fsrscreen_retrieveDepartureDataFromVVO();
@@ -181,12 +186,21 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 	return $workingArray;
 }
 
+/**
+ * Generates the <span> element for a single departure. Used by fsrscreen_generateSpanForSingleDirection
+ * @param array $departureArray
+ * @return string
+ */
 function fsrscreen_generateSpanForSingeDeparture (array $departureArray) : string
 {
 	return "<span class='fsrscreen_singleDepartureContainer'><span class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</span><span class='fsrscreen_singleDepartureDestination'>$departureArray[1]</span></span>";
 }
 
-
+/**
+ * Generates the <span> element for a single direction of a public transport line. Used by fsrscreen_generateSpanForSingleLine
+ * @param array $departureArray
+ * @return string
+ */
 function fsrscreen_generateSpanForSingeDirection (array $departureArray) : string
 {
 	$outputString = "<span class='fsrscreen_mainDirectionContainer'>";
@@ -197,7 +211,12 @@ function fsrscreen_generateSpanForSingeDirection (array $departureArray) : strin
 	return $outputString."</span>";
 }
 
-
+/**
+ * Generates the <span> element for a single public transport line. Used by fsrscreen_generateScreenLayout
+ * @param array $departureArray
+ * @param string $lineNr
+ * @return string
+ */
 function fsrscreen_generateSpanForSingleLine (array $departureArray, string $lineNr) : string
 {
 	$outputString = "<span class='fsrscreen_lineContainer'><span class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</span>";
