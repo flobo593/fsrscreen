@@ -94,7 +94,9 @@
 	"Weißig": "WEI",
 	"Bühlau": "BUE",
 	"Fernsehturm": "FST",
-	"Hauptbahnhof": "HBF"
+	"Hauptbahnhof": "HBF",
+	"Grumbach": "Grmb.",
+	"Mohorn": "Mohn."
   },
   "linesToNotDisplay": [400]
 }

@@ -13,6 +13,26 @@ License: A "Slug" license name e.g. GPL2
 declare(strict_types=1);
 
 add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
+add_action('wp_enqueue_scripts', 'fsrscreen_enqueueStylesAndScripts');
+
+/**
+ * Enqueues the style.php file as style document
+ * @return void
+ */
+function fsrscreen_enqueueStylesAndScripts () : void
+{
+	wp_enqueue_style(
+		'fsrscreen_pluginStyles',
+		plugin_dir_url(__FILE__) . 'assets/styles.php',
+		array()
+	);
+	
+	wp_enqueue_script(
+		'fsrscreen_pluginScripts',
+		plugin_dir_url(__FILE__) . 'includes/scripts.js',
+		array()
+	);
+}
 
 /**
  * Function that is called by the fsrscreen_showNextDepartures short code
@@ -187,44 +207,44 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 }
 
 /**
- * Generates the <span> element for a single departure. Used by fsrscreen_generateSpanForSingleDirection
+ * Generates the <div> element for a single departure. Used by fsrscreen_generateSpanForSingleDirection
  * @param array $departureArray
  * @return string
  */
-function fsrscreen_generateSpanForSingeDeparture (array $departureArray) : string
+function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
 {
-	return "<span class='fsrscreen_singleDepartureContainer'><span class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</span><span class='fsrscreen_singleDepartureDestination'>$departureArray[1]</span></span>";
+	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</div><div class='fsrscreen_singleDepartureDestination'>$departureArray[1]</div></div>";
 }
 
 /**
- * Generates the <span> element for a single direction of a public transport line. Used by fsrscreen_generateSpanForSingleLine
+ * Generates the <div> element for a single direction of a public transport line. Used by fsrscreen_generateSpanForSingleLine
  * @param array $departureArray
  * @return string
  */
-function fsrscreen_generateSpanForSingeDirection (array $departureArray) : string
+function fsrscreen_generateDivForSingeDirection (array $departureArray) : string
 {
-	$outputString = "<span class='fsrscreen_mainDirectionContainer'>";
+	$outputString = "<div class='fsrscreen_mainDirectionContainer'>";
 	foreach ($departureArray as $departure) {
-		$outputString .= fsrscreen_generateSpanForSingeDeparture($departure);
+		$outputString .= fsrscreen_generateDivForSingeDeparture($departure);
 	}
 	
-	return $outputString."</span>";
+	return $outputString."</div>";
 }
 
 /**
- * Generates the <span> element for a single public transport line. Used by fsrscreen_generateScreenLayout
+ * Generates the <div> element for a single public transport line. Used by fsrscreen_generateScreenLayout
  * @param array $departureArray
  * @param string $lineNr
  * @return string
  */
-function fsrscreen_generateSpanForSingleLine (array $departureArray, string $lineNr) : string
+function fsrscreen_generateDivForSingleLine (array $departureArray, string $lineNr) : string
 {
-	$outputString = "<span class='fsrscreen_lineContainer'><span class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</span>";
+	$outputString = "<div class='fsrscreen_lineContainer'><div class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</div>";
 	foreach ($departureArray as $direction) {
-		$outputString .= fsrscreen_generateSpanForSingeDirection($direction);
+		$outputString .= fsrscreen_generateDivForSingeDirection($direction);
 	}
 	
-	return $outputString."</span>";
+	return $outputString."</div>";
 }
 
 
@@ -237,8 +257,8 @@ function fsrscreen_generateScreenLayout (array $departureArray) : string
 {
 	$outputString = "";
 	foreach ($departureArray as $line => $directions) {
-		$outputString .= fsrscreen_generateSpanForSingleLine($directions, strval($line));
+		$outputString .= fsrscreen_generateDivForSingleLine($directions, strval($line));
 	}
 	
-	return "<div class='fsrscreen_nextDepartreBar'>$outputString</div>";
+	return "<div class='fsrscreen_nextDepartureBar'>$outputString</div>";
 }
