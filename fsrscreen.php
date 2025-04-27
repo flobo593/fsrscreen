@@ -26,7 +26,7 @@ function fsrscreen_showNextDepartures () : void
  */
 function fsrscreen_readConfig () : array
 {
-	$configPath = 'assets/config.json';
+	$configPath = plugin_dir_path(__FILE__)."assets/config.json";
 	try {
 		if (!file_exists($configPath)) {
 			throw new Exception('config.json not found');
