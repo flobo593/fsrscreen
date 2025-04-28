@@ -245,6 +245,7 @@ function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
 /**
  * Generates the <div> element for a single direction of a public transport line. Used by fsrscreen_generateSpanForSingleLine
  * @param array $departureArray
+ * @param string $mainDirectionName
  * @return string
  */
 function fsrscreen_generateDivForSingeDirection (array $departureArray, string $mainDirectionName) : string
@@ -265,6 +266,7 @@ function fsrscreen_generateDivForSingeDirection (array $departureArray, string $
  */
 function fsrscreen_generateDivForSingleLine (array $departureArray, string $lineNr) : string
 {
+	ksort($departureArray);
 	$outputString = "<div class='fsrscreen_lineContainer'><div class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</div>";
 	foreach ($departureArray as $direction => $departures) {
 		$outputString .= fsrscreen_generateDivForSingeDirection($departures, $direction);

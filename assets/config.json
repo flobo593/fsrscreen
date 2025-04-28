@@ -43,15 +43,15 @@
 	"61": {
 	  "directions": [
 		{
-		  "default": "Löbtau"
-		},
-		{
 		  "default": "Bühlau",
 		  "other": [
 			"W",
 			"F",
 			"Gruna"
 		  ]
+		},
+		{
+		  "default": "Löbtau"
 		}
 	  ]
 	},
