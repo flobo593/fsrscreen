@@ -7,7 +7,7 @@
 	  "hst": "NUP",
 	  "vz": "0",
 	  "ort": "Dresden",
-	  "lim": 20
+	  "lim": 10
 	}
   },
   "lines": {
@@ -63,16 +63,15 @@
 		{
 		  "default": "PIP",
 		  "other": [
-			"HBF",
-			"Ammonstraße"
+			"HBF"
 		  ]
 		},
 		{
 		  "default": "Hetzdorf",
 		  "other": [
-			"Mohorn",
-			"Wilsdruff",
-			"Grumbach"
+			"Mohn.",
+			"Wilsd.",
+			"Grmb."
 		  ]
 		}
 	  ]
@@ -96,7 +95,8 @@
 	"Fernsehturm": "FST",
 	"Hauptbahnhof": "HBF",
 	"Grumbach": "Grmb.",
-	"Mohorn": "Mohn."
+	"Mohorn": "Mohn.",
+	"Wilsdruff": "Wilsd."
   },
   "linesToNotDisplay": [400]
 }
