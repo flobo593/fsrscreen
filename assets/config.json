@@ -14,15 +14,15 @@
 	"3": {
 	  "directions": [
 		{
-		  "default": "WIM",
+		  "default": "Wilder\nMann",
 		  "other": [
-			"TRB"
+			"Trachenberge"
 		  ]
 		},
 		{
-		  "default": "COZ",
+		  "default": "Coschütz",
 		  "other": [
-			"NTN"
+			"Plauen"
 		  ]
 		}
 	  ]
@@ -30,15 +30,15 @@
 	"8": {
 	  "directions": [
 		{
-		  "default": "SVS",
+		  "default": "Südvorstadt",
 		  "display": false
 		},
 		{
-		  "default": "HEL",
+		  "default": "Hellerau",
 		  "other": [
-			"GOR",
-			"TRB",
-			"IFS"
+			"Gorbitz",
+			"Trachenberge",
+			"Infineon Süd"
 		  ]
 		}
 	  ]
@@ -46,14 +46,14 @@
 	"61": {
 	  "directions": [
 		{
-		  "default": "THA"
+		  "default": "Löbtau"
 		},
 		{
-		  "default": "BUE",
+		  "default": "Bühlau",
 		  "other": [
-			"WEI",
-			"FST",
-			"GRN"
+			"Weißig",
+			"Fernsehturm",
+			"Gruna"
 		  ]
 		}
 	  ]
@@ -78,21 +78,7 @@
 	}
   },
   "destinations": {
-	"Btf. Trachenberge": "TRB",
-	"Btf. Gorbitz": "GOR",
-	"Btf. Waltherstraße": "BWA",
-	"Btf. Gruna": "GRN",
-	"Coschütz": "COZ",
-	"Wilder Mann": "WIM",
-	"Plauen": "NTN",
-	"Südvorstadt": "SVS",
-	"Hellerau": "HEL",
-	"Infineon Süd": "IFS",
-	"Löbtau": "THA",
-	"Gruna": "GRN",
-	"Weißig": "WEI",
-	"Bühlau": "BUE",
-	"Fernsehturm": "FST",
+	"Wilder Mann": "Wilder\nMann",
 	"Hauptbahnhof": "HBF",
 	"Grumbach": "Grmb.",
 	"Mohorn": "Mohn.",

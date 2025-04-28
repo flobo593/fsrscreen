@@ -12,12 +12,14 @@ header("Content-Type: text/css");
         bottom: 0;
         z-index: 100;
 		width: 100vw;
-		height: 5vw;
+		height: 4vw;
         padding-bottom: 5px;
 		background: black;
 		color: white;
-        font-size: 4.5vw;
+        font-size: 3.5vw;
 		font-family: 'Century Gothic', sans-serif;
+        overflow: hidden;
+        white-space: nowrap;
 	}
     
     .fsrscreen_lineContainer {
@@ -31,8 +33,8 @@ header("Content-Type: text/css");
         font-weight: bold;
         padding: .1em;
         margin: 0;
-        width: 5vw;
-        height: 5vw;
+        width: 4vw;
+        height: 4vw;
     }
     
 	/* This generates the statements providing the line numbers with their specific color as defined in the lines.json */
@@ -73,6 +75,17 @@ header("Content-Type: text/css");
         padding: 0;
     }
     
+    .fsrscreen_mainDirectionName {
+        float: left;
+		text-align: center;
+		font-size: .5em;
+		font-weight: normal;
+		padding: .625em .5em;
+		margin: 0;
+		height: 4vw;
+        text-transform: full-size-kana;
+    }
+    
     .fsrscreen_singleDepartureContainer {
 		float: left;
 		text-align: center;
@@ -80,19 +93,20 @@ header("Content-Type: text/css");
 		font-weight: bolder;
 		padding: .1em;
 		margin: 0;
-		width: 6.5vw;
-		height: 5vw;
+		width: 5.5vw;
+		height: 4vw;
     }
     
-    .fsrscreen_singeDepartureTimeRemaining {
+    .fsrscreen_singleDepartureTimeRemaining {
 		float: left;
+        width: fit-content;
     }
     
     .fsrscreen_singleDepartureDestination {
 		float: left;
         text-align: end;
-        writing-mode: vertical-rl;
-        font-size: 4.5vw;
+        /*writing-mode: vertical-rl;*/
+        font-size: .5em;
         font-weight: lighter;
         color: #999;
     }
