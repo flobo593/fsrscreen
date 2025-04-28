@@ -206,6 +206,12 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 	
 	// Sort array after line number
 	ksort($workingArray);
+	
+	// Sort main directions
+	foreach ($workingArray as $item) {
+		ksort($item);
+	}
+	
 	return $workingArray;
 }
 
@@ -216,7 +222,7 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
  */
 function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
 {
-	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</div><div class='fsrscreen_singleDepartureDestination'>$departureArray[1]</div></div>";
+	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</div><sup class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sup></div>";
 }
 
 /**
@@ -224,9 +230,9 @@ function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
  * @param array $departureArray
  * @return string
  */
-function fsrscreen_generateDivForSingeDirection (array $departureArray) : string
+function fsrscreen_generateDivForSingeDirection (array $departureArray, string $mainDirectionName) : string
 {
-	$outputString = "<div class='fsrscreen_mainDirectionContainer'>";
+	$outputString = "<div class='fsrscreen_mainDirectionContainer'><div class='fsrscreen_mainDirectionName'>$mainDirectionName</div>";
 	foreach ($departureArray as $departure) {
 		$outputString .= fsrscreen_generateDivForSingeDeparture($departure);
 	}
@@ -243,8 +249,8 @@ function fsrscreen_generateDivForSingeDirection (array $departureArray) : string
 function fsrscreen_generateDivForSingleLine (array $departureArray, string $lineNr) : string
 {
 	$outputString = "<div class='fsrscreen_lineContainer'><div class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</div>";
-	foreach ($departureArray as $direction) {
-		$outputString .= fsrscreen_generateDivForSingeDirection($direction);
+	foreach ($departureArray as $direction => $departures) {
+		$outputString .= fsrscreen_generateDivForSingeDirection($departures, $direction);
 	}
 	
 	return $outputString."</div>";
