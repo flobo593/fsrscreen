@@ -195,13 +195,22 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 			$workingArray[$departure[0]][$mainDirection] = array();
 		}
 		
+		// Skip if already 2 departures are in array
+		if (count($workingArray[$departure[0]][$mainDirection]) >= 2) continue;
+		
 		// If departing immediately set minutesRemaining to 0
 		if ($departure[2] == "") {
 			$departure[2] = "0";
 		}
 		
+		if ($departure[1] == $mainDirection) {
+			$destination = "";
+		} else {
+			$destination = $departure[1];
+		}
+		
 		// Add processed data to workingArray
-		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $departure[1]);
+		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $destination);
 	}
 	
 	// Sort array after line number
