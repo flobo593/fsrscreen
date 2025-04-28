@@ -30,10 +30,6 @@
 	"8": {
 	  "directions": [
 		{
-		  "default": "Südvorstadt",
-		  "display": false
-		},
-		{
 		  "default": "Hellerau",
 		  "other": [
 			"Gorbitz",
