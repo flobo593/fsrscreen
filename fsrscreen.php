@@ -203,6 +203,9 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 		// Add processed data to workingArray
 		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $departure[1]);
 	}
+	
+	// Sort array after line number
+	ksort($workingArray);
 	return $workingArray;
 }
 
