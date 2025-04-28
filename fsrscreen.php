@@ -32,6 +32,12 @@ function fsrscreen_enqueueStylesAndScripts () : void
 		plugin_dir_url(__FILE__) . 'includes/scripts.js',
 		array()
 	);
+	
+	wp_enqueue_script(
+		'jQuery',
+		'https://code.jquery.com/jquery-3.6.0.min.js',
+		array()
+	);
 }
 
 /**
@@ -280,5 +286,5 @@ function fsrscreen_generateScreenLayout (array $departureArray) : string
 		$outputString .= fsrscreen_generateDivForSingleLine($directions, strval($line));
 	}
 	
-	return "<div class='fsrscreen_nextDepartureBar'>$outputString</div>";
+	return "<div class='fsrscreen_nextDepartureBar' id='fsrscreen_nextDepartureBar'>$outputString</div>";
 }
