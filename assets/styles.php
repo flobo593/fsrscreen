@@ -14,16 +14,25 @@ header("Content-Type: text/css");
 		width: 100vw;
 		height: 4vw;
         padding-bottom: 5px;
-		background: black;
 		color: white;
         font-size: 3.5vw;
 		font-family: 'Century Gothic', sans-serif;
         overflow: hidden;
         white-space: nowrap;
+        align-items: center;
+        background-color: black;
 	}
     
     .fsrscreen_lineContainer {
         float: left;
+		border-color: #fff;
+        border-style: solid;
+        border-width: 0 .075em 0 0;
+        background-color: black;
+    }
+    
+    .fsrscreen_lineContainer:last-of-type {
+        border: none;
     }
     
     .fsrscreen_lineNr {
@@ -72,7 +81,12 @@ header("Content-Type: text/css");
     
     .fsrscreen_mainDirectionContainer {
 		float: left;
-        padding: 0;
+        padding: 0 .3em 0 0;
+        border-right: .05em solid #aaa;
+    }
+    
+    .fsrscreen_mainDirectionContainer:last-of-type {
+        border: none;
     }
     
     .fsrscreen_mainDirectionName {
@@ -80,10 +94,10 @@ header("Content-Type: text/css");
 		text-align: center;
 		font-size: .5em;
 		font-weight: normal;
-		padding: .625em .5em;
+		padding: .55em 0 .55em .4em;
 		margin: 0;
 		height: 4vw;
-        text-transform: full-size-kana;
+        letter-spacing: -.1ex;
     }
     
     .fsrscreen_singleDepartureContainer {
@@ -93,21 +107,29 @@ header("Content-Type: text/css");
 		font-weight: bolder;
 		padding: .1em;
 		margin: 0;
-		width: 5.5vw;
 		height: 4vw;
     }
     
     .fsrscreen_singleDepartureTimeRemaining {
 		float: left;
-        width: fit-content;
+        width: 3.5vw;
+        text-align: right;
+    }
+    
+    .fsrscreen_singleDepartureTimeRemaining::after {
+        content: "'";
+        vertical-align: text-top;
+        font-size: .8em;
+        color: #aaa;
     }
     
     .fsrscreen_singleDepartureDestination {
-		float: left;
+		/*float: left;*/
         text-align: end;
         /*writing-mode: vertical-rl;*/
-        font-size: .5em;
-        font-weight: lighter;
-        color: #999;
+        font-size: .3em;
+        font-weight: bolder;
+        vertical-align: sub;
+        padding-top: .6em;
     }
 </style>

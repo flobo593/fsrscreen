@@ -8,6 +8,6 @@ function adjustFontSize (element) {
 
 const fsrscreen_lineDestinations = document.getElementsByClassName('fsrscreen_singleDepartureDestination');
 
-for (let i = 0; i < fsrscreen_lineDestinations.length; i++) {
+/*for (let i = 0; i < fsrscreen_lineDestinations.length; i++) {
 	adjustFontSize (fsrscreen_lineDestinations[i])
-}
+}*/

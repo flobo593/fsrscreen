@@ -209,6 +209,8 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 			$destination = $departure[1];
 		}
 		
+		$destination = str_replace(" ", "<br>", $destination);
+		
 		// Add processed data to workingArray
 		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $destination);
 	}
@@ -231,7 +233,7 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
  */
 function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
 {
-	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]</div><sup class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sup></div>";
+	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]<sub class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sub></div></div>";
 }
 
 /**

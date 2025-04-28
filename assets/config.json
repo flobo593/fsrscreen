@@ -7,7 +7,8 @@
 	  "hst": "NUP",
 	  "vz": "0",
 	  "ort": "Dresden",
-	  "lim": 10
+	  "vm": "Stadtbus,Straßenbahn",
+	  "lim": 20
 	}
   },
   "lines": {
@@ -16,7 +17,7 @@
 		{
 		  "default": "Wilder\nMann",
 		  "other": [
-			"Trachenberge"
+			"T"
 		  ]
 		},
 		{
@@ -32,9 +33,9 @@
 		{
 		  "default": "Hellerau",
 		  "other": [
-			"Gorbitz",
-			"Trachenberge",
-			"Infineon Süd"
+			"G",
+			"T",
+			"I"
 		  ]
 		}
 	  ]
@@ -47,8 +48,8 @@
 		{
 		  "default": "Bühlau",
 		  "other": [
-			"Weißig",
-			"Fernsehturm",
+			"W",
+			"F",
 			"Gruna"
 		  ]
 		}
@@ -78,7 +79,13 @@
 	"Hauptbahnhof": "HBF",
 	"Grumbach": "Grmb.",
 	"Mohorn": "Mohn.",
-	"Wilsdruff": "Wilsd."
+	"Wilsdruff": "Wilsd.",
+	"Fernsehturm": "F",
+	"Weißig": "W",
+	"Btf. Trachenberge": "T",
+	"Btf. Gorbitz": "G",
+	"Gorbitz": "G",
+	"Infineon": "I"
   },
-  "linesToNotDisplay": [400]
+  "linesToNotDisplay": [400, 333]
 }
