@@ -7,7 +7,7 @@ Description: This implements the Widgets shown on the FSR Monitor.
 Version: 1.0.1
 Author: Florian Boden
 Author URI: http://floribo.de
-License: A "Slug" license name e.g. GPL2
+License: GPL 3.0
 */
 
 declare(strict_types=1);
