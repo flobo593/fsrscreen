@@ -16,34 +16,6 @@ function fsrscreen_showNextDepartures () : void
 }
 
 /**
- * Reads the config file at assets/config.json and returns an array
- * @return array
- */
-function fsrscreen_readConfig () : array
-{
-	$configPath = plugin_dir_path(__FILE__)."assets/config.json";
-	try {
-		if (!file_exists($configPath)) {
-			throw new Exception('config.json not found');
-		}
-	}
-	catch (Exception $e) {
-		die($e->getMessage());
-	}
-	
-	try {
-		$configFile = json_decode(file_get_contents($configPath), true);
-		if (!$configFile) {
-			throw new Exception('config.json malformed');
-		}
-	}
-	catch (Exception $e) {
-		die($e->getMessage());
-	}
-	return $configFile;
-}
-
-/**
  * Sends request to VVO endpoint.
  * Returns an array of departure arrays.
  * Each departure array contains three values: [0}: line number; [1]: destination; [2]: minutes until departure
