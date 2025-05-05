@@ -1,10 +1,10 @@
 <?php
 
 /**
-Plugin Name: fsrScreenWidgets
+Plugin Name: FSR Screen
 Plugin URI: http://github.com/flobo593/fsrscreen
 Description: This implements the Widgets shown on the FSR Monitor.
-Version: 0.1
+Version: 1.0.1
 Author: Florian Boden
 Author URI: http://floribo.de
 License: A "Slug" license name e.g. GPL2
