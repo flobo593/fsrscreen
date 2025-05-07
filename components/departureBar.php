@@ -6,13 +6,13 @@ add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
 
 /**
  * Function that is called by the fsrscreen_showNextDepartures short code
- * @return void
+ * @return string
  */
-function fsrscreen_showNextDepartures () : void
+function fsrscreen_showNextDepartures () : string
 {
 	$data = fsrscreen_retrieveDepartureDataFromVVO();
 	$sanitizedData = fsrscreen_generateStructuredArrayWithNextDepartures($data);
-	echo fsrscreen_generateScreenLayout($sanitizedData);
+	return fsrscreen_generateScreenLayout($sanitizedData);
 }
 
 /**
@@ -58,26 +58,12 @@ function fsrscreen_retrieveDepartureDataFromVVO () : array
 }
 
 /**
- * Converts a given destination into its code using the config.json file. If there is no code for a destination given in the config.json file, it returns its input value
- * @param string $destination The name of the destination to be translated to its code.
- * @return string
- */
-function fsrscreen_translateFullDestinationsToCodes (string $destination) : string
-{
-	$dests = fsrscreen_readConfig()['destinations'];
-	if (key_exists($destination, $dests)) {
-		return $dests[$destination];
-	}
-	return $destination;
-}
-
-/**
  * Finds the main direction for a given destination-line-pair.
- * @param string $destination Destination of the trip, as station code
+ * @param string $destination Destination of the trip
  * @param string $lineNr Line number
- * @return string|null|false Returns id of the main direction, if not found null, or if set to display=false: false.
+ * @return array|null|false Returns array of name and footnote of the main direction, if not found null, or if set to display=false: false.
  */
-function fsrscreen_findMainDirectionForDestination (string $destination, string $lineNr) : string|null|false {
+function fsrscreen_findMainDirectionForDestination (string $destination, string $lineNr) : array|null|false {
 	$lineDirections = fsrscreen_readConfig()['lines'][$lineNr]['directions'];
 	foreach ($lineDirections as $directionId => $lineDirection) {
 		
@@ -87,13 +73,13 @@ function fsrscreen_findMainDirectionForDestination (string $destination, string 
 		}
 		
 		// Check, if destination == main direction
-		if ($destination == $lineDirection['default']) return $lineDirection['default'];
+		if ($destination == $lineDirection['default']) return array($lineDirection['default'], "");
 		
 		// Skip if 'other' is not defined
 		if (!key_exists('other', $lineDirection)) continue;
 		
 		// Search 'other' sub array for destination
-		if (in_array($destination, $lineDirection['other'])) return $lineDirection['default'];
+		if (key_exists($destination, $lineDirection['other'])) return array($lineDirection['default'], $lineDirection['other'][$destination]);
 	}
 	return null;
 }
@@ -108,9 +94,6 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 {
 	$workingArray = array();
 	foreach ($sourceArray as $departure) {
-		
-		// Translate all destinations to their code.
-		$departure[1] = fsrscreen_translateFullDestinationsToCodes($departure[1]);
 		
 		// Remove leading E's
 		$departure[0] = trim($departure[0], 'E');
@@ -133,28 +116,20 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 		if ($mainDirection === false) continue;
 		
 		// Create main direction entry in workingArray -> line, if not exists already
-		if (!key_exists($mainDirection, $workingArray[$departure[0]])) {
-			$workingArray[$departure[0]][$mainDirection] = array();
+		if (!key_exists($mainDirection[0], $workingArray[$departure[0]])) {
+			$workingArray[$departure[0]][$mainDirection[0]] = array();
 		}
 		
 		// Skip if already 2 departures are in array
-		if (count($workingArray[$departure[0]][$mainDirection]) >= 2) continue;
+		if (count($workingArray[$departure[0]][$mainDirection[0]]) >= 2) continue;
 		
 		// If departing immediately set minutesRemaining to 0
 		if ($departure[2] == "") {
 			$departure[2] = "0";
 		}
 		
-		if ($departure[1] == $mainDirection) {
-			$destination = "";
-		} else {
-			$destination = $departure[1];
-		}
-		
-		$destination = str_replace(" ", "<br>", $destination);
-		
 		// Add processed data to workingArray
-		$workingArray[$departure[0]][$mainDirection][] = array($departure[2], $destination);
+		$workingArray[$departure[0]][$mainDirection[0]][] = array($departure[2], $mainDirection[1]);
 	}
 	
 	// Sort array after line number

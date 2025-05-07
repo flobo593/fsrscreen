@@ -15,16 +15,17 @@
 	"3": {
 	  "directions": [
 		{
-		  "default": "Wilder\nMann",
-		  "other": [
-			"T"
-		  ]
+		  "default": "Wilder Mann",
+		  "other": {
+			"Btf. Trachenberge": "T",
+			"Trachenberge": "T"
+		  }
 		},
 		{
 		  "default": "Coschütz",
-		  "other": [
-			"Plauen"
-		  ]
+		  "other": {
+			"Plauen": "P"
+		  }
 		}
 	  ]
 	},
@@ -32,11 +33,13 @@
 	  "directions": [
 		{
 		  "default": "Hellerau",
-		  "other": [
-			"G",
-			"T",
-			"I"
-		  ]
+		  "other": {
+			"Btf. Gorbitz": "G",
+			"Gorbitz": "G",
+			"Btf. Trachenberge": "T",
+			"Trachenberge": "T",
+			"Infineon Süd": "I"
+		  }
 		}
 	  ]
 	},
@@ -44,11 +47,12 @@
 	  "directions": [
 		{
 		  "default": "Bühlau",
-		  "other": [
-			"W",
-			"F",
-			"Gruna"
-		  ]
+		  "other": {
+			"Weißig": "W",
+			"Fernsehturm": "F",
+			"Btf. Gruna": "G",
+			"Gruna": "G"
+		  }
 		},
 		{
 		  "default": "Löbtau"
@@ -59,33 +63,21 @@
 	  "directions": [
 		{
 		  "default": "PIP",
-		  "other": [
-			"HBF"
-		  ]
+		  "other": {
+			"Hauptbahnhof": "H",
+			"Ammonstraße": "A"
+		  }
 		},
 		{
-		  "default": "Hetzdorf",
-		  "other": [
-			"Mohn.",
-			"Wilsd.",
-			"Grmb."
-		  ]
+		  "default": "Wilsdruff",
+		  "other": {
+			"Hetzdorf": "H",
+			"Mohorn": "M",
+			"Grumbach": "G"
+		  }
 		}
 	  ]
 	}
-  },
-  "destinations": {
-	"Wilder Mann": "Wilder\nMann",
-	"Hauptbahnhof": "HBF",
-	"Grumbach": "Grmb.",
-	"Mohorn": "Mohn.",
-	"Wilsdruff": "Wilsd.",
-	"Fernsehturm": "F",
-	"Weißig": "W",
-	"Btf. Trachenberge": "T",
-	"Btf. Gorbitz": "G",
-	"Gorbitz": "G",
-	"Infineon": "I"
   },
   "linesToNotDisplay": [400, 333]
 }

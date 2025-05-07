@@ -10,6 +10,7 @@ header("Content-Type: text/css");
 		display: inline;
 		position: fixed;
 		bottom: 0;
+        left: 0;
 		z-index: 100;
 		width: 100vw;
 		height: 4vw;
@@ -21,10 +22,15 @@ header("Content-Type: text/css");
 		white-space: nowrap;
 		align-items: center;
 		background-color: black;
+		max-width: unset;
 	}
+    
+    .fsrscreen_nextDepartureBar *:not(sub) {
+        /*display: inline;*/
+        float: left;
+    }
 
 	.fsrscreen_lineContainer {
-		float: left;
 		border-color: #fff;
 		border-style: solid;
 		border-width: 0 .075em 0 0;
@@ -36,7 +42,6 @@ header("Content-Type: text/css");
 	}
 
 	.fsrscreen_lineNr {
-		float: left;
 		text-align: center;
 		font-size: .8em;
 		font-weight: bold;
@@ -81,7 +86,6 @@ header("Content-Type: text/css");
  ?>
 
 	.fsrscreen_mainDirectionContainer {
-		float: left;
 		padding: 0 .3em 0 0;
 		border-right: .05em solid #aaa;
 	}
@@ -91,7 +95,6 @@ header("Content-Type: text/css");
 	}
 
 	.fsrscreen_mainDirectionName {
-		float: left;
 		text-align: center;
 		font-size: .5em;
 		font-weight: normal;
@@ -103,7 +106,6 @@ header("Content-Type: text/css");
 	}
 
 	.fsrscreen_singleDepartureContainer {
-		float: left;
 		text-align: center;
 		font-size: .8em;
 		font-weight: bolder;
@@ -113,7 +115,6 @@ header("Content-Type: text/css");
 	}
 
 	.fsrscreen_singleDepartureTimeRemaining {
-		float: left;
 		width: clamp(3.5vw, 3.5vw, 4.5vw);
 		text-align: right;
 		line-height: .8em;
@@ -128,9 +129,7 @@ header("Content-Type: text/css");
 	}
 
 	.fsrscreen_singleDepartureDestination {
-		/*float: left;*/
 		text-align: end;
-		/*writing-mode: vertical-rl;*/
 		font-size: .5em;
 		font-weight: bolder;
 		vertical-align: sub;
