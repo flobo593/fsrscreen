@@ -2,9 +2,9 @@
 
 /**
 Plugin Name: FSR Screen
-Plugin URI: http://github.com/flobo593/fsrscreen
+Plugin URI: http://github.com/fsrverkehr/fsrscreen
 Description: This implements the Widgets shown on the FSR Monitor.
-Version: 1.0.1
+Version: 2.0.0-dev
 Author: Florian Boden
 Author URI: http://floribo.de
 License: GPL 3.0
