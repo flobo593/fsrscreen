@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // Add short code
-add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
+#add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
 
 /**
  * Function that is called by the fsrscreen_showNextDepartures short code
@@ -10,9 +10,22 @@ add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
  */
 function fsrscreen_showNextDepartures () : string
 {
-	$data = fsrscreen_retrieveDepartureDataFromVVO();
-	$sanitizedData = fsrscreen_generateStructuredArrayWithNextDepartures($data);
-	return fsrscreen_generateScreenLayout($sanitizedData);
+	// --- VVO Data ---
+	$vvoData = fsrscreen_retrieveDepartureDataFromVVO();
+	$sanitizedVvoData = fsrscreen_generateStructuredArrayWithNextDepartures($vvoData);
+
+    // --- Nextbike Data ---
+    $nextbikeConfig = fsrscreen_readConfig()['nextbike'] ?? null;
+    $nextbikeData = null;
+    if ($nextbikeConfig && ($nextbikeConfig['enabled'] ?? false)) {
+        $rawNextbikeData = fsrscreen_retrieveNextbikeData($nextbikeConfig);
+        if ($rawNextbikeData) {
+           $nextbikeData = fsrscreen_processNextbikeData($rawNextbikeData, $nextbikeConfig);
+        }
+    }
+
+    // --- Generate Layout ---
+	return fsrscreen_generateScreenLayout($sanitizedVvoData, $nextbikeData);
 }
 
 /**
@@ -143,6 +156,117 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 	return $workingArray;
 }
 
+
+/**
+ * Sends request to Nextbike endpoint to get details for the config's station.
+ *
+ * @param array $config Nextbike configuration array.
+ * @return array|null Decoded JSON response as array or null on failure.
+ */
+function fsrscreen_retrieveNextbikeData(array $config): ?array
+{
+	$apiKey = $config['api_key'] ?? null;
+	$stationId = $config['station_id'] ?? null;
+
+	if (!$apiKey || !$stationId) {
+		error_log("Nextbike configuration malformed.");
+		return null;
+	}
+
+	$apiUrl = $config['getBikeList'] ?? null;
+	$method = "POST";
+
+	$postData = json_encode([
+		"api_key" => $apiKey,
+		"station" => $stationId 
+	]);
+
+	if ($postData === false) {
+		error_log("Fehler beim Kodieren der Nextbike POST-Daten.");
+		return null;
+   }
+
+
+   // --- cURL Request ---
+   $curl = curl_init();
+
+   curl_setopt_array($curl, [
+	   CURLOPT_URL => $apiUrl,
+	   CURLOPT_RETURNTRANSFER => true,
+	   CURLOPT_ENCODING => "",
+	   CURLOPT_MAXREDIRS => 10,
+	   CURLOPT_TIMEOUT => 30,
+	   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	   CURLOPT_CUSTOMREQUEST => $method,
+	   CURLOPT_POSTFIELDS => $postData,
+	   CURLOPT_HTTPHEADER => [
+		   "Content-Type: application/json",
+		   "Accept: application/json"
+	   ],
+   ]);
+
+   $response = curl_exec($curl);
+   $err = curl_error($curl);
+   $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+   curl_close($curl);
+
+
+   if ($err) {
+	error_log("cURL error during fetching nextbike-data: $" . $err);
+	return null;
+   }
+
+   if ($httpCode >= 400) { //is this fine?	
+	error_log("Nextbike's robust API seems to have trobule handling the request: HTTP Status " . $httpCode . "\nRespone: " . $response);
+	return null;
+   }
+
+   if (empty($response)) {
+	error_log("Nextbike's robust API returned an empty response.");
+	return null;
+   }
+
+   $decodedResponse = json_decode($response, true);
+
+   if(json_last_error() !== JSON_ERROR_NONE) {
+	error_log("Error when trying to decode nextbike's respons: " . json_last_error_msg());
+	return null;
+   }
+
+   return $decodedResponse;
+
+}
+
+/**
+ * Processes the raw Nextbike data to count regular and cargo bikes.
+ *
+ * @param array $nextbikeApiResponse The decoded JSON response from Nextbike API.
+ * @param array $config Nextbike configuration array.
+ * @return int|null count of regular bikes or null if data is invalid.
+ */
+function fsrscreen_processNextbikeData(array $nextbikeApiResponse, array $config): ?int
+{
+	$bikeList = $nextbikeApiResponse['items'];
+
+	$regularBikeCount = 0; //we could also count cargo-bikes here, but I don't see the use case.
+
+	foreach ($bikeList as $bike) {
+		if (is_array($bike) && isset($bike['home_place_id'])) {//this is a hacky way of determing if a bike is a cargo bike. There certainly are more robust ways.
+			if($bike['home_place_id'] !== 0) {
+				$regularBikeCount++;
+			}
+		} else {
+			erro_log("Found invalid format in nextbike response: " . $nextbikeApiResponse);
+		}
+	}
+
+	return $regularBikeCount;
+
+}
+
+
+
 /**
  * Generates the <div> element for a single departure. Used by fsrscreen_generateSpanForSingleDirection
  * @param array $departureArray
@@ -189,15 +313,26 @@ function fsrscreen_generateDivForSingleLine (array $departureArray, string $line
 
 /**
  * Generates the full HTML <div> for displaying the data on the site.
- * @param array $departureArray Array as given by generateStructuredArrayWithNextDepartures() function
+ * @param array $departureArray Array as given by generateStructuredArrayWithNextDepartures() function.
+ * @param int|null $bikeCount number of regular bikes available at station or null.
  * @return string HTML string
  */
-function fsrscreen_generateScreenLayout (array $departureArray) : string
+function fsrscreen_generateScreenLayout (array $departureArray, ?int $bikeCount) : string
 {
-	$outputString = "";
+	$VVOOutputString = "";
 	foreach ($departureArray as $line => $directions) {
-		$outputString .= fsrscreen_generateDivForSingleLine($directions, strval($line));
+		$VVOOutputString .= fsrscreen_generateDivForSingleLine($directions, strval($line));
 	}
-	
-	return "<div class='fsrscreen_nextDepartureBar' id='fsrscreen_nextDepartureBar'>$outputString</div>";
+
+	$nextbikeOutputString = "";
+	if ($bikeCount !== null) {
+		$nextbikeOutputString .= "<div class='fsrscreen_nextbikeContainer'>";
+        $nextbikeOutputString .= "<div class='fsrscreen_lineNr fsrscreen_nextbikeIcon' id='fsrscreen_line_bike'>🚲</div>";
+		$nextbikeOutputString .= "<div class ='fsrscreen_nextbikeCount'>" . $bikeCount . "</div>";
+		$nextbikeOutputString .= "</div>";
+	}
+	else {
+		$nextbikeOutputString .= "error";
+	}
+	return "<div class='fsrscreen_nextDepartureBar' id='fsrscreen_nextDepartureBar'>".$VVOOutputString . $nextbikeOutputString."</div>";
 }
