@@ -148,7 +148,7 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
  * @param array $departureArray
  * @return string
  */
-function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
+function fsrscreen_generateDivForSingleDeparture (array $departureArray) : string
 {
 	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]<sub class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sub></div></div>";
 }
@@ -159,11 +159,11 @@ function fsrscreen_generateDivForSingeDeparture (array $departureArray) : string
  * @param string $mainDirectionName
  * @return string
  */
-function fsrscreen_generateDivForSingeDirection (array $departureArray, string $mainDirectionName) : string
+function fsrscreen_generateDivForSingleDirection (array $departureArray, string $mainDirectionName) : string
 {
 	$outputString = "<div class='fsrscreen_mainDirectionContainer'><div class='fsrscreen_mainDirectionName'>$mainDirectionName</div>";
 	foreach ($departureArray as $departure) {
-		$outputString .= fsrscreen_generateDivForSingeDeparture($departure);
+		$outputString .= fsrscreen_generateDivForSingleDeparture($departure);
 	}
 	
 	return $outputString."</div>";
@@ -180,7 +180,7 @@ function fsrscreen_generateDivForSingleLine (array $departureArray, string $line
 	ksort($departureArray);
 	$outputString = "<div class='fsrscreen_lineContainer'><div class='fsrscreen_lineNr' id='fsrscreen_line_$lineNr'>$lineNr</div>";
 	foreach ($departureArray as $direction => $departures) {
-		$outputString .= fsrscreen_generateDivForSingeDirection($departures, $direction);
+		$outputString .= fsrscreen_generateDivForSingleDirection($departures, $direction);
 	}
 	
 	return $outputString."</div>";
