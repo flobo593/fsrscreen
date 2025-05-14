@@ -4,7 +4,7 @@
 Plugin Name: FSR Screen
 Plugin URI: http://github.com/fsrverkehr/fsrscreen
 Description: This implements the Widgets shown on the FSR Monitor.
-Version: 2.0.0-dev
+Version: indev
 Author: FSR Verkehr
 Author URI: https://github.com/fsrverkehr/fsrscreen/blob/main/AUTHORS
 License: GPL 3.0
@@ -13,7 +13,7 @@ License: GPL 3.0
 declare(strict_types=1);
 
 // Include components
-include "components/departureBar.php";
+include "components/departureBar/departureBar.php";
 
 // Add WP actions
 add_action('wp_enqueue_scripts', 'fsrscreen_enqueueStylesAndScripts');
