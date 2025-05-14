@@ -182,7 +182,7 @@ function fsrscreen_retrieveNextbikeData(array $config): ?array
 	]);
 
 	if ($postData === false) {
-		error_log("Fehler beim Kodieren der Nextbike POST-Daten.");
+		error_log("Error encoding nextbike's POST data.");
 		return null;
    }
 
