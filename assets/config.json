@@ -84,6 +84,6 @@
 	"enabled": true,
 	"api_key": "rXXqTgQZUPZ89lzB",
 	"getBikeList": "https://api.nextbike.net/api/getBikeList.json",
-	"station_id": "43044"
+	"station_id": "43005"
   }
 }
