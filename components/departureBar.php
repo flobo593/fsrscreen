@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 // Add short code
-#add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
+add_shortcode('fsrscreen_showNextDepartures', 'fsrscreen_showNextDepartures');
 
 /**
  * Function that is called by the fsrscreen_showNextDepartures short code
@@ -50,7 +50,7 @@ function fsrscreen_retrieveDepartureDataFromVVO () : array
 	}
 	
 	// just a curl query. Explains itself.
-	$curl = curl_init();
+	$curl = curlx_init();
 	
 	curl_setopt_array($curl, [
 		CURLOPT_URL => $uri.$flags,
