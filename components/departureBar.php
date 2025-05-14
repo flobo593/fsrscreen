@@ -50,7 +50,7 @@ function fsrscreen_retrieveDepartureDataFromVVO () : array
 	}
 	
 	// just a curl query. Explains itself.
-	$curl = curlx_init();
+	$curl = curl_init();
 	
 	curl_setopt_array($curl, [
 		CURLOPT_URL => $uri.$flags,
