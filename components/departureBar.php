@@ -257,7 +257,7 @@ function fsrscreen_processNextbikeData(array $nextbikeApiResponse, array $config
 				$regularBikeCount++;
 			}
 		} else {
-			erro_log("Found invalid format in nextbike response: " . $nextbikeApiResponse);
+			error_log("Found invalid format in nextbike response: " . $nextbikeApiResponse);
 		}
 	}
 
