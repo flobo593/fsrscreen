@@ -253,7 +253,7 @@ function fsrscreen_processNextbikeData(array $nextbikeApiResponse, array $config
 
 	foreach ($bikeList as $bike) {
 		if (is_array($bike) && isset($bike['home_place_id'])) {//this is a hacky way of determing if a bike is a cargo bike. There certainly are more robust ways.
-			if($bike['home_place_id'] !== 0) {
+			if($bike['home_place_id'] === 0) {
 				$regularBikeCount++;
 			}
 		} else {
