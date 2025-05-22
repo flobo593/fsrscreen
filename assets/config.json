@@ -1,15 +1,6 @@
 {
   "dataProvider": {
-	"providerId": "VVO-Abfahrtsmonitor",
-	"uri": "http://widgets.vvo-online.de/abfahrtsmonitor/Abfahrten.do",
-	"method": "GET",
-	"flags": {
-	  "hst": "NUP",
-	  "vz": "0",
-	  "ort": "Dresden",
-	  "vm": "Stadtbus,Straßenbahn",
-	  "lim": 20
-	}
+	"providerId": "vvo-legacy"
   },
   "lines": {
 	"3": {

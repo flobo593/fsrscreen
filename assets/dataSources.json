@@ -1,0 +1,32 @@
+{
+  "vvo-legacy":{
+	"name": "VVO-Widgets: Abfahrtsmonitor (legacy)",
+	"uri": "http://widgets.vvo-online.de/abfahrtsmonitor/Abfahrten.do",
+	"method": "GET",
+	"flags": {
+	  "hst": "NUP",
+	  "vz": "0",
+	  "ort": "Dresden",
+	  "vm": "Stadtbus,Straßenbahn",
+	  "lim": 20
+	},
+	"payloadFormat": "",
+	"payload": {}
+  },
+  "vvo-webAPI": {
+	"name": "VVO WebAPI",
+	"uri": "https://webapi.vvo-online.de/dm",
+	"method": "POST",
+	"flags": [],
+	"payloadFormat": "json",
+	"payload": {
+	  "stopid": "33000132",
+	  "isarrival": false,
+	  "mot": ["Tram", "CityBus"],
+	  "limit": 30,
+	  "shorttermchanges": true,
+	  "mentzonly": false,
+	  "format": "json"
+	}
+  }
+}

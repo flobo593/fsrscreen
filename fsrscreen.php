@@ -4,7 +4,7 @@
 Plugin Name: FSR Screen
 Plugin URI: http://github.com/fsrverkehr/fsrscreen
 Description: This implements the Widgets shown on the FSR Monitor.
-Version: indev
+Version: dev
 Author: FSR Verkehr
 Author URI: https://github.com/fsrverkehr/fsrscreen/blob/main/AUTHORS
 License: GPL 3.0
@@ -13,7 +13,7 @@ License: GPL 3.0
 declare(strict_types=1);
 
 // Include components
-include "components/departureBar/departureBar.php";
+include "components/departureBar/departureBar-main.php";
 
 // Add WP actions
 add_action('wp_enqueue_scripts', 'fsrscreen_enqueueStylesAndScripts');
@@ -69,4 +69,33 @@ function fsrscreen_readConfig () : array
 		die($e->getMessage());
 	}
 	return $configFile;
+}
+
+/**
+ * Reads the config file at assets/config.json and returns an array
+ * @param string $providerId ID of the data source as defined in dataSources.json
+ * @return array
+ */
+function fsrscreen_readProviderConfig (string $providerId) : array
+{
+	$configPath = plugin_dir_path(__FILE__)."assets/dataSources.json";
+	try {
+		if (!file_exists($configPath)) {
+			throw new Exception('dataSources.json not found');
+		}
+	}
+	catch (Exception $e) {
+		die($e->getMessage());
+	}
+	
+	try {
+		$configFile = json_decode(file_get_contents($configPath), true);
+		if (!$configFile) {
+			throw new Exception('dataSources.json malformed');
+		}
+	}
+	catch (Exception $e) {
+		die($e->getMessage());
+	}
+	return $configFile[$providerId];
 }
