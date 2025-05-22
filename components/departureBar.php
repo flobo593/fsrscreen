@@ -230,7 +230,7 @@ function fsrscreen_retrieveNextbikeData(array $config): ?array
    $decodedResponse = json_decode($response, true);
 
    if(json_last_error() !== JSON_ERROR_NONE) {
-	error_log("Error when trying to decode nextbike's respons: " . json_last_error_msg());
+	error_log("Error when trying to decode nextbike's response: " . json_last_error_msg());
 	return null;
    }
 
