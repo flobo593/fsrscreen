@@ -10,7 +10,7 @@ header("Content-Type: text/css");
 		display: inline;
 		position: fixed;
 		bottom: 0;
-        left: 0;
+		left: 0;
 		z-index: 100;
 		width: 100vw;
 		height: 3.7vw;
@@ -24,11 +24,11 @@ header("Content-Type: text/css");
 		background-color: black;
 		max-width: unset;
 	}
-    
-    .fsrscreen_nextDepartureBar *:not(sub) {
-        /*display: inline;*/
-        float: left;
-    }
+
+	.fsrscreen_nextDepartureBar *:not(sub) {
+		/*display: inline;*/
+		float: left;
+	}
 
 	.fsrscreen_lineContainer {
 		border-color: #fff;
@@ -112,16 +112,16 @@ header("Content-Type: text/css");
 		padding: .1em;
 		margin: 0;
 		height: 4vw;
-    }
+	}
 
 	.fsrscreen_singleDepartureTimeRemaining {
 		width: 3.5vw;
-        height: 100%;
+		height: 100%;
 		text-align: right;
 		line-height: .8em;
 		font-weight: normal;
-        position: relative;
-        right: 0;
+		position: relative;
+		right: 0;
 	}
 
 	/*.fsrscreen_singleDepartureReplacement::after {
@@ -132,31 +132,31 @@ header("Content-Type: text/css");
 
 	.fsrscreen_noReplacement::after {
 		content: "'";
-        position: relative;
-        top: -1ex;
+		position: relative;
+		top: -1ex;
 		font-size: .8em;
 		color: #aaa;
 	}
 	.fsrscreen_singleDepartureReplacement::after {
+		all: unset;
 		content: "EV";
 		vertical-align: text-top;
 		font-size: .4em;
-        font-weight: bolder;
+		font-weight: bolder;
 		color: #F02293;
-        position: relative;
-        top: .2ex;
-        left: 0;
-        width: 0;
-        overflow: visible;
-    }
-    
-    .fsrscreen_time {
-        text-align: right;
-        vertical-align: center;
-        width: 100%;
-        height: 100%;
-        padding-top: .2em;
-    }
+		position: relative;
+		top: -1ex;
+		left: 0;
+		overflow: visible;
+	}
+
+	.fsrscreen_time {
+		text-align: right;
+		vertical-align: center;
+		width: 100%;
+		height: 100%;
+		padding-top: .2em;
+	}
 
 	.fsrscreen_singleDepartureDestination {
 		text-align: end;
@@ -164,8 +164,25 @@ header("Content-Type: text/css");
 		font-weight: bolder;
 		vertical-align: sub;
 		padding-top: .6em;
-        letter-spacing: -.3ex;
-        position: relative;
-        left: 0;
+		letter-spacing: -.3ex;
+		position: relative;
+		left: 0;
+	}
+
+	.fsrscreen_nextbikeIcon {
+		padding: .1em .2em .55em .2em;
+		height: 100%;
+		line-height: 1em;
+	}
+
+	.fsrscreen_nextbikeCount {
+		font-size: .8em;
+		text-align: center;
+		font-weight: normal;
+		padding: .1em 0 .55em .4em;
+		margin: 0;
+		height: 4vw;
+		letter-spacing: -.2ex;
+		line-height: 1.2em;
 	}
 </style>
