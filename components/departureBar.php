@@ -92,7 +92,9 @@ function fsrscreen_findMainDirectionForDestination (string $destination, string 
 		if (!key_exists('other', $lineDirection)) continue;
 		
 		// Search 'other' sub array for destination
-		if (key_exists($destination, $lineDirection['other'])) return array($lineDirection['default'], $lineDirection['other'][$destination]);
+		if (key_exists($destination, $lineDirection['other'])) {
+			return array($lineDirection['default'], $lineDirection['other'][$destination]);
+		}
 	}
 	return null;
 }
@@ -108,7 +110,14 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 	$workingArray = array();
 	foreach ($sourceArray as $departure) {
 		
+		if (str_contains($departure[0], 'EV')) {
+			$isReplacement = true;
+		} else {
+			$isReplacement = false;
+		}
+		
 		// Remove leading E's
+		$departure[0] = trim($departure[0], 'EV');
 		$departure[0] = trim($departure[0], 'E');
 		
 		// Ignore lines told to ignore by the config.json
@@ -142,7 +151,7 @@ function fsrscreen_generateStructuredArrayWithNextDepartures (array $sourceArray
 		}
 		
 		// Add processed data to workingArray
-		$workingArray[$departure[0]][$mainDirection[0]][] = array($departure[2], $mainDirection[1]);
+		$workingArray[$departure[0]][$mainDirection[0]][] = array($departure[2], $mainDirection[1], $isReplacement);
 	}
 	
 	// Sort array after line number
@@ -274,7 +283,14 @@ function fsrscreen_processNextbikeData(array $nextbikeApiResponse, array $config
  */
 function fsrscreen_generateDivForSingleDeparture (array $departureArray) : string
 {
-	return "<div class='fsrscreen_singleDepartureContainer'><div class='fsrscreen_singleDepartureTimeRemaining'>$departureArray[0]<sub class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sub></div></div>";
+	// If is replacement
+	if ($departureArray[2]) {
+		$replacementClass = " fsrscreen_singleDepartureReplacement";
+	} else {
+		$replacementClass = " fsrscreen_noReplacement";
+	}
+	
+	return "<div class='fsrscreen_singleDepartureContainer$replacementClass'><div class='fsrscreen_singleDepartureTimeRemaining'><div class='fsrscreen_time'>$departureArray[0]</div><sub class='fsrscreen_singleDepartureDestination'>$departureArray[1]</sub></div></div>";
 }
 
 /**

@@ -18,7 +18,9 @@
 		  "default": "Wilder Mann",
 		  "other": {
 			"Btf. Trachenberge": "T",
-			"Trachenberge": "T"
+			"Trachenberge": "T",
+			"Walpurgisstr.": "WPS",
+			"Hauptbahnhof Nord": "HBN"
 		  }
 		},
 		{
@@ -38,8 +40,14 @@
 			"Gorbitz": "G",
 			"Btf. Trachenberge": "T",
 			"Trachenberge": "T",
-			"Infineon Süd": "I"
+			"Infineon Süd": "I",
+			"Walpurgisstr.": "WPS",
+			"Hauptbahnhof Nord": "HBN"
 		  }
+		},
+		{
+		  "default": "Südvorstadt",
+		  "display": false
 		}
 	  ]
 	},

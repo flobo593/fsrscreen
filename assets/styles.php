@@ -13,10 +13,10 @@ header("Content-Type: text/css");
         left: 0;
 		z-index: 100;
 		width: 100vw;
-		height: 4vw;
+		height: 3.7vw;
 		padding-bottom: 5px;
 		color: white;
-		font-size: 3.5vw;
+		font-size: 3.2vw;
 		font-family: 'Century Gothic', sans-serif;
 		overflow: hidden;
 		white-space: nowrap;
@@ -47,7 +47,7 @@ header("Content-Type: text/css");
 		font-weight: bold;
 		padding: .1em;
 		margin: 0;
-		width: 4vw;
+		width: 3.3vw;
 		height: 4vw;
 		line-height: 1.3em;
 	}
@@ -86,7 +86,7 @@ header("Content-Type: text/css");
  ?>
 
 	.fsrscreen_mainDirectionContainer {
-		padding: 0 .3em 0 0;
+		padding: 0 .2em 0 0;
 		border-right: .05em solid #aaa;
 	}
 
@@ -101,38 +101,71 @@ header("Content-Type: text/css");
 		padding: .55em 0 .55em .4em;
 		margin: 0;
 		height: 4vw;
-		letter-spacing: -.1ex;
+		letter-spacing: -.2ex;
 		line-height: 1.2em;
 	}
 
 	.fsrscreen_singleDepartureContainer {
-		text-align: center;
+		text-align: right;
 		font-size: .8em;
 		font-weight: bolder;
 		padding: .1em;
 		margin: 0;
 		height: 4vw;
-	}
+    }
 
 	.fsrscreen_singleDepartureTimeRemaining {
-		width: clamp(3.5vw, 3.5vw, 4.5vw);
+		width: 3.5vw;
+        height: 100%;
 		text-align: right;
 		line-height: .8em;
 		font-weight: normal;
+        position: relative;
+        right: 0;
 	}
 
-	.fsrscreen_singleDepartureTimeRemaining::after {
+	/*.fsrscreen_singleDepartureReplacement::after {
+		content: 'EV';
+		font-size: .5em;
+		top: 0;
+	}*/
+
+	.fsrscreen_noReplacement::after {
 		content: "'";
-		vertical-align: text-top;
+        position: relative;
+        top: -1ex;
 		font-size: .8em;
 		color: #aaa;
 	}
+	.fsrscreen_singleDepartureReplacement::after {
+		content: "EV";
+		vertical-align: text-top;
+		font-size: .4em;
+        font-weight: bolder;
+		color: #F02293;
+        position: relative;
+        top: .2ex;
+        left: 0;
+        width: 0;
+        overflow: visible;
+    }
+    
+    .fsrscreen_time {
+        text-align: right;
+        vertical-align: center;
+        width: 100%;
+        height: 100%;
+        padding-top: .2em;
+    }
 
 	.fsrscreen_singleDepartureDestination {
 		text-align: end;
-		font-size: .5em;
+		font-size: .35em;
 		font-weight: bolder;
 		vertical-align: sub;
 		padding-top: .6em;
+        letter-spacing: -.3ex;
+        position: relative;
+        left: 0;
 	}
 </style>
