@@ -4,7 +4,7 @@
 Plugin Name: FSR Screen
 Plugin URI: http://github.com/fsrverkehr/fsrscreen
 Description: This implements the Widgets shown on the FSR Monitor.
-Version: dev
+Version: 1.0.4-nextbike-preview
 Author: FSR Verkehr
 Author URI: https://github.com/fsrverkehr/fsrscreen/blob/main/AUTHORS
 License: GPL 3.0
@@ -36,11 +36,13 @@ function fsrscreen_enqueueStylesAndScripts () : void
 		array()
 	);
 	
-	wp_enqueue_script(
-		'jQuery',
-		'https://code.jquery.com/jquery-3.6.0.min.js',
-		array()
-	);
+	if (is_page('fsrmonitor')) {
+		wp_enqueue_script(
+			'jQuery',
+			'https://code.jquery.com/jquery-3.6.0.min.js',
+			array()
+		);
+	}
 }
 
 /**
